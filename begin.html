@@ -182,6 +182,134 @@ Console.WriteLine(builder.ToString());
 
 *Get user input
 - Console.ReadLine()
+- 입력받은 값은 무조건 sring으로 반환
+
+*Math
+- Math.Max()
+- Math.min()
+- Math.sqrt()
+- Math.abs()
+- Math.Round()
+
+*String
+- String.Length
+- String.ToUpper()
+- String.ToLower()
+- String.Concat()
+- Interpolation
+    string firstName = "John";
+    string lastName = "Doe";
+    string name = $"My full name is: {firstName} {lastName}";
+    Console.WriteLine(name);
+- Access
+  ~ String[]
+  ~ String.IndexOf(" ")
+- String.Substring()
+- Special Character
+  ~ \ 사용
+
+*foreach
+- foreach(type variableName in arrayName){
+
+}
+
+*Array.sort(array)
+
+* System.Linq namespace
+- Array method 
+  ~ Min
+  ~ Max
+  ~ Sum
+
+    using System;
+    using System.Linq;
+
+    namespace MyApplication
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+            int[] myNumbers = {5, 1, 8, 9};
+            Console.WriteLine(myNumbers.Max());  // returns the largest value
+            Console.WriteLine(myNumbers.Min());  // returns the smallest value
+            Console.WriteLine(myNumbers.Sum());  // returns the sum of elements
+            }
+        }
+    }
+
+*Mutidimensional Arrays
+- Two-Dimensional Arrays
+  ~ int[,] numbers = {{1, 2, 3}, {4, 5, 6}}
+    Console.WriteLine(numbers[0, 2]); 
+
+  ~ foreach 가능
+
+  ~ 각 행의 길이는 GetLength() 사용하여 얻을 수 있음
+    int[,] numbers = { {1, 4, 2}, {3, 6, 8} };
+
+    for (int i = 0; i < numbers.GetLength(0); i++) 
+    { 
+        for (int j = 0; j < numbers.GetLength(1); j++) 
+        { 
+        Console.WriteLine(numbers[i, j]); 
+        } 
+    } 
+
+*Default Parameter Value
+- static void MyMethod(string country = "Norway") 
+  MyMethod();
+
+*Named Arguments
+- key: value syntax
+    static void MyMethod(string child1, string child2, string child3) 
+    {
+    Console.WriteLine("The youngest child is: " + child3);
+    }
+
+    static void Main(string[] args)
+    {
+    MyMethod(child3: "John", child1: "Liam", child2: "Liam");
+    }
+
+*Method overloading
+    static int PlusMethod(int x, int y)
+    {
+    return x + y;
+    }
+
+    static double PlusMethod(double x, double y)
+    {
+    return x + y;
+    }
+
+*Use a class in a different file
+using System;
+
+    prog.cs
+        namespace MyApplication
+        {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+            Car myObj = new Car();
+            Console.WriteLine(myObj.color);
+            }
+        }
+        }
+
+
+    prog2.cs
+        using System;
+
+        namespace MyApplication
+        {
+        class Car
+        {
+            public string color = "red";
+        }
+        }
 
 
 </pre>
