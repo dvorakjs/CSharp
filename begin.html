@@ -1,1 +1,121 @@
-begin
+<pre>
+
+## 2024년 01월 22일 ##  
+* .NET에서 실행되는 애플리케이션 작성
+* object-oriented, component-oriented 프로그래밍 언어
+  - Garbage collection
+  - Nullable type
+  - Exception handling
+  - Lambda expression
+  - LINQ(Language Integrated Query)
+  - Asynchronous operations
+  - Unified type System
+  - User-defined reference type and values type
+  - 객체 동적 할당
+  - 경량 구조체에 대한 인라인 스토리지
+  - 제네릭 메소드와 타입
+  - iterator
+
+* Common Language Runtime(CLR)  
+  - .NET
+     ~Common Language Infrastructure(CLI)의 international standard의 MS 구현 
+  - Virtual execution system
+
+* Source code는 intermediate language(IL)로 컴파일됨
+  - *.dill 형태로 code와 resource가 어셈블리고 저장됨
+  - 실행 시 어셈블리는 CLR에 로딩되어 Just-In-Time(JIT) 컴파일
+  - C#과 F#, Visual Basic, C++의 .NET 버젼과 호환 가능
+    ~Common Type Specification(CTS) 준수
+  - 
+
+
+
+
+
+
+*하나 이상의 파일로 구성
+*각 파일은 0개 이상의 네임스페이스를 포함
+*네임스페이스는 다음 사항 포함
+ - 클래스
+ - 구조체
+ - 인터페이스
+ - 열거형
+ - 대리자
+ - 다른 네임스페이스
+    // A skeleton of a C# program
+    using System;
+    namespace YourNamespace
+    {
+        class YourClass
+        {
+        }
+    
+        struct YourStruct
+        {
+        }
+    
+        interface IYourInterface
+        {
+        }
+    
+        delegate int YourDelegate();
+    
+        enum YourEnum
+        {
+        }
+    
+        namespace YourNestedNamespace
+        {
+            struct YourStruct
+            {
+            }
+        }
+    
+        class Program
+        {
+            //Entry point
+            static void Main(string[] args)
+            {
+                //Your program starts here...
+                Console.WriteLine("Hello world!");
+            }
+        }
+    }
+    
+*진입점은 하나
+ Main 메소드 또는 파일의 최상위 문
+ class TestClass
+ {
+     static void Main(string[] args)
+     {
+         // Display the number of command line arguments.
+         Console.WriteLine(args.Length);
+     }
+ }
+
+using System.Text;
+
+StringBuilder builder = new();
+builder.AppendLine("Hello");
+builder.AppendLine("World!");
+
+Console.WriteLine(builder.ToString());
+
+
+*Main 메소드
+- 프로그램 제어가 시작되고 끝나는 위치
+- 클래스 또는 구조체 내부에 선언
+- string [] 매개 변수 사용 여부에 상관없이 선언
+    public static void Main() { }
+    public static int Main() { }
+    public static void Main(string[] args) { }
+    public static int Main(string[] args) { }
+    public static async Task Main() { }
+    public static async Task<int> Main() { }
+    public static async Task Main(string[] args) { }
+    public static async Task<int> Main(string[] args) { }
+- 매개 변수를 수동으로 추가 가능
+- GetCommandLineArgs() 사용하여 명령줄 인수 가져올 수 있음
+- 프로그램 이름이 GetCommandLineArgs() 메서드의 첫번째 요소
+
+</pre>
