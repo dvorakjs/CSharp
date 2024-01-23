@@ -150,161 +150,135 @@ bool isStartGPS = false;   //시작여부
 
 private void startGPS()
 {
-
-GPSserialPort= new SerialPort();
-GPSserialPort.PortName = "COM6";   //COM 포트 설정
-GPSserialPort.BaudRate = "4800";      //통신속도 설정- 크게 차이는 없으나 제품에서 권장하는 값을로 셋팅
- GPSserialPort.Parity = Parity.None;
- GPSserialPort.DataBits = 8;
- GPSserialPort.StopBits = StopBits.One;
- GPSserialPort.ReadBufferSize = 600;
-if (!GPSserialPort.IsOpen)  //GPS 포트가 열려있지 않으면 오픈한다.
- GPSserialPort.Open();
-isStartGPS = true;
- //나같은 경우는 필요에 따라 GPS 수신을 쓰레드에서 처리하기로 했다.
- ThreadGPS = new Thread(new ThreadStart(this.receiveGPSMsg));
- ThreadGPS.IsBackground = true;
- ThreadGPS.Start();
+    GPSserialPort= new SerialPort();
+    GPSserialPort.PortName = "COM6";   //COM 포트 설정
+    GPSserialPort.BaudRate = "4800";      //통신속도 설정- 크게 차이는 없으나 제품에서 권장하는 값을로 셋팅
+    GPSserialPort.Parity = Parity.None;
+    GPSserialPort.DataBits = 8;
+    GPSserialPort.StopBits = StopBits.One;
+    GPSserialPort.ReadBufferSize = 600;
+    
+    if(!GPSserialPort.IsOpen)  //GPS 포트가 열려있지 않으면 오픈
+        GPSserialPort.Open();
+    isStartGPS = true;
+    
+    ThreadGPS = new Thread(new ThreadStart(this.receiveGPSMsg));
+    ThreadGPS.IsBackground = true;
+    ThreadGPS.Start();
 }
 
-//GPS 수신 처리 
-// COM 포트가 연결된 상태에서는 계속에서 GPS 수신 문자열이 수신되므로
-//주기를 이용하여 약3초정도 마다 문자열을 끊어서 제일 마지막 GPGGA만을 가지고 메세지 처리를 하였다.
- /// <summary>
-        /// GPS 메세지 읽기 -처리
-        /// </summary>
-        private void receiveGPSMsg()
-        {
-             try
-            {
-                while (isStartGPS)
-                {
-                    if (!GPSserialPort.IsOpen)
-                    {
-                        MessageBox.Show("GPS 연결이 끊겼습니다. GPS 접속환경 및 GPS연결정보를 살펴보시기 바랍니다.");
-                        return;
-                    }
-                    
-                    Thread.Sleep(3000);  //3초간 대기후 데이터 읽음
+private void receiveGPSMsg()
+{
+    try
+    {
+        while (isStartGPS)
+        {
+            if (!GPSserialPort.IsOpen)
+            {
+                MessageBox.Show("GPS 연결이 끊겼습니다. GPS 접속환경 및 GPS연결정보를 살펴보시기 바랍니다.");
+                return;
+            }
+                  
+            Thread.Sleep(3000);  //3초간 대기후 데이터 읽음
                                                          
-                        string GPSData = "";
-                        try
-                        {
-                          GPSData=GPSserialPort.ReadExisting();  //시리얼 포트에서 GPS 데이터 읽기
-                        
-                            parsingMsg(GPSData ); //함수 호출..... 데이터 처리하기                               
-                        }
-                        catch (Exception e)
-                        {
-                            MessageBox.Show(e.ToString());
-                            return;
-                        }
-                    
-                }
+            string GPSData = "";
+            try
+            {
+                GPSData=GPSserialPort.ReadExisting();  //시리얼 포트에서 GPS 데이터 읽기                
+                parsingMsg(GPSData ); //함수 호출..... 데이터 처리하기                               
             }
-            catch (ThreadInterruptedException)
-            {
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
                 return;
-            }
-        }
-
+            }                    
+        }
+    }
+    catch (ThreadInterruptedException)
+    {
+        return;
+    }
+}
 
 public void parsingMsg(string Msg, bool isSave)
-        {
-        
-            string 위도= null;
-            string 경도 = null; 
-            string 수신시간= "";  
-            string GPS수신종류= "";   
-            string 위성갯수= ""; 
-            string 고도(해수면기준)= "";    
-            string[] ChkMsg = null;
-            string temp = "";
-            if (Msg == null || Msg.Equals(""))
-            {
-            }
-            else
-            {
-                try
-                {
-                    Msg.Replace("\n\r", "");
-                    int selectIDX = -1;
-                    string[] strArr = Msg.Split('$');
-                    for (int i = strArr.Length-1; i >= 0; i--)   //최근의 GPGGA 문자열 찾기
-                    {
-                        if (strArr[i].ToString().Substring(0, 5).Equals("GPGGA"))
-                        {
-                            ChkMsg = strArr[i].ToString().Split(',');
-                            if (ChkMsg[2] == null || ChkMsg[3] == null || ChkMsg[4] == null || ChkMsg[5] == null)
-                            {
-                                continue;
-                            }
-                            else if (ChkMsg[2].ToString().Replace(" ", "").Equals("") || ChkMsg[3].ToString().Replace(" ", "").Equals("") || ChkMsg[4].ToString().Replace(" ", "").Equals("") || ChkMsg[5].ToString().Replace(" ", "").Equals(""))
-                            {
-                                continue;
-                            }
-                            else
-                            {
-                                selectIDX = i;
-                                break;
-                            }
-                            
-                        }
-                    }
-                    if (selectIDX < 0)  //수신 문자열중 GPGGA 없을때
-                    {
-                        위도= null;
+{ 
+    string 위도= null;
+    string 경도 = null; 
+    string 수신시간= "";  
+    string GPS수신종류= "";   
+    string 위성갯수= ""; 
+    string 고도(해수면기준)= "";    
+    string[] ChkMsg = null;
+    string temp = "";
+    
+    if (Msg == null || Msg.Equals(""))
+    {
 
-            경도 = null; 
-            수신시간= "";  
-            GPS수신종류= "";   
-            위성갯수= ""; 
-            고도(해수면기준)= "";  
+    }
+    else
+    {
+        try
+        {
+            Msg.Replace("\n\r", "");
+            int selectIDX = -1;
+            string[] strArr = Msg.Split('$');
+            
+            for (int i = strArr.Length-1; i >= 0; i--)   //최근의 GPGGA 문자열 찾기
+            {
+                if (strArr[i].ToString().Substring(0, 5).Equals("GPGGA"))
+                {
+                    ChkMsg = strArr[i].ToString().Split(',');
+                    if (ChkMsg[2] == null || ChkMsg[3] == null || ChkMsg[4] == null || ChkMsg[5] == null)
+                    {
+                        continue;
+                    }
+                    else if (ChkMsg[2].ToString().Replace(" ", "").Equals("") || ChkMsg[3].ToString().Replace(" ", "").Equals("") || ChkMsg[4].ToString().Replace(" ", "").Equals("") || ChkMsg[5].ToString().Replace(" ", "").Equals(""))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        selectIDX = i;
+                        break;
+                    }                            
+                }
+            }
+            
+            if (selectIDX < 0)  //수신 문자열중 GPGGA 없을때
+            {
+                위도= null;
+                경도 = null; 
+                수신시간= "";  
+                GPS수신종류= "";   
+                위성갯수= ""; 
+                고도(해수면기준)= "";  
                     
-      }
-
-                    else
-                    {
-                         string[] ArrMsg = ChkMsg;
-                        temp = ArrMsg[1].ToString();
-                        int hour = Convert.ToInt16(temp.Substring(0, 2)) + 9;
-                        if (hour > 24)
-                        {
-                            hour = hour - 24;
-                        }
-                        수신시간= "" + hour + "시";
-                        수신시간+= " " + temp.Substring(2, 2) + "분 " + temp.Substring(4, 5) + "초";  //시간
-                        위도 = ArrMsg[2].ToString();
-                        경도 = ArrMsg[4].ToString();
+            }
+            else
+            {
+                string[] ArrMsg = ChkMsg;
+                temp = ArrMsg[1].ToString();
+                int hour = Convert.ToInt16(temp.Substring(0, 2)) + 9;
+                
+                if (hour > 24)
+                {
+                    hour = hour - 24;
+                }
+                
+                수신시간= "" + hour + "시";
+                수신시간+= " " + temp.Substring(2, 2) + "분 " + temp.Substring(4, 5) + "초";  //시간
+                
+                위도 = ArrMsg[2].ToString();
+                경도 = ArrMsg[4].ToString();
                         
-                        수신종류= ArrMsg[6].ToString();   
-                        /* 수신종류값별 GPS
-
-                    //1 = GPS fix (SPS) 
-                   //2 = DGPS fix
-                   //3 = PPS fix
-                   //4 = Real Time Kinematic
-                   //5 = Float RTK
-                   //6 = estimated (dead reckoning) (2.3 feature)
-                   //7 = Manual input mode
-                   //8 = Simulation mode
-    */
-
-
-                        위성갯수= ArrMsg[7].ToString();  
-                        고도(해수면기준) = ArrMsg[9].ToString();    
-                    }
-                                      
-                    
-                                                     
-                                       
-                }
-                catch(Exception e)
-                {
+            }
+        }
+        catch(Exception e)
+        {
                   
-                }
-            }
-        
-\
+        }
+    }
+}  
+
 
 </pre>
