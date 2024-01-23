@@ -1,0 +1,303 @@
+<pre>
+*NMEA(National Marine Electronics Association)
+- 해양 전자 장비 기자재들 간의 통신을 위한 데이터 프로토콜
+- GPS는 NMEA-0183 프로토콜 사용
+  $GPRMC,141114.999,A,3730.0264,N,12655.2351,E,15.51,202.12,101200,,*3C
+  ~ $: 문장의 시작
+  ~ Device ID: 장치 구분, $ 바로 다음에 오는 문자 2개
+  ~ Sentence ID: 문장 구분, Device ID 다음에 오는 문자 3개
+  ~ ,: 각 필드 구분
+  ~ *: checksum, $와 , 사이에 있는 각 문자를 XOR 연산한 값
+
+  <table >
+    <tr>
+        <td><p>&nbsp;Idx</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Field</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Value</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Comments</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;1</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Sentence ID</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;$GPGGA</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Global Positioning system fixed data</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;2</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;UTC Time</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;141113.999</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;시각. hhmmss.sss 형태이다.&nbsp;</p>
+        <p>&nbsp;예제는 14시 11분 13.999초 라는 의미이다. 세계 표준시 이므로 한국에서 사용하려면&nbsp;+9 를 해야 한다.</p>
+        <p>&nbsp;참고로 날짜는 GPGGA로는 확인 할 수 없고,&nbsp;GPRMC에서 처리해야 한다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;3</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Latitude</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;3730.0308</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;위도. ddmm.mmmm 형식이다. 앞의 2자가 '도' 이고 이후는 '분' 이다.</p>
+        <p>&nbsp;*'도분초' 형식이 아닌 '도분' 인것을 유의할 것.&nbsp;</p>
+        <p>&nbsp;필요하다면&nbsp;소수점 아래는 60을 곱하여 '초' 형식으로 변환 해야 한다.</p>
+        <p>&nbsp;=&gt; 0.0308분 x 60 =&nbsp;1.848 초</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;4</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;N/S Indicator</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;N</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;N = North, S = South</p>
+        <p>&nbsp;북위 인지 남위&nbsp;인지를 나타낸다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;5</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Longitude</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;12655.2369</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;경도. dddmm.mmmm 형식이다. &nbsp;앞의 3자가 '도' 이고 이후는 '분' 이다.&nbsp;</p>
+        <p>&nbsp;*'도분초' 형식이 아닌 '도분' 인것을 유의할 것.&nbsp;</p>
+        <p>&nbsp;필요하다면&nbsp;소수점 아래는 60을 곱하여 '초' 형식으로 변환 해야 한다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;6</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;E/W Indicator</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;E</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;E = East, W = West,&nbsp;</p>
+        <p>&nbsp;동경인지&nbsp;서경인지를 나타낸다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;7</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Position Fix</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;1</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;0 = Invalid, 1 = Valid SPS, 2 = Valid DGPS, 3 = Valid PPS</p>
+        <p>&nbsp;위치가 결정 됐는지를 나타낸다. 이 값이 0이면 위도, 경도 등을 믿을 수 없으므로 사용하면 안된다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;8</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Satellites Used</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;06</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Satellites being used (0-12)</p>
+        <p>&nbsp;현재 수신되는 위성의 개수이다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;9</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;HDOP</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;1.7</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Horizontal Dilution of Precision</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 23px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;10</p></td>
+        <td style="width: 144px; height: 23px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Altitude</p></td>
+        <td style="width: 148px; height: 23px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;98.9</p></td>
+        <td style="width: 638px; height: 23px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;WGS-84 타원체에서 &nbsp;평균해수면(MSL : Mean Sea Level)을 기준으로 한 고도.</p>
+        <p>&nbsp;고도값의 단위는 다음에 오는 Altitude Units&nbsp;필드가 결정한다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;11</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Altitude Units</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;M</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;M = Meters</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;12</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Geoid Seperation</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;(empty)&nbsp;</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Geoid seperation in meters according to WGS-84 ellipsoid</p>
+        <p>&nbsp;MSL과 Geoid의 고도차. 마이너스 값이 나올 수 있다.</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;13</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Seperation Units</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;(empty)</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;M = Meters</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;14</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;DGPS Age</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;(empty)</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Age of DGPS data in seconds</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;15</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;DPGS Station ID</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;0</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;16</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Checksum</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;*3E</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;</p></td>
+    </tr>
+    <tr>
+        <td style="width: 44px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-left: 1px solid rgb(204, 204, 204);"><p>&nbsp;17</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;Terminator</p></td>
+        <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;CR/LF</p></td>
+        <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204);"><p>&nbsp;</p></td>
+    </tr>
+    </tbody></table>
+
+
+  using System.IO.Ports;
+
+//GPS 실행 시작
+Thread ThreadGPS = null ;  //GPS 쓰레드
+SerialPort GPSserialPort;  //시리얼 포트
+bool isStartGPS = false;   //시작여부
+
+private void startGPS()
+{
+
+GPSserialPort= new SerialPort();
+GPSserialPort.PortName = "COM6";   //COM 포트 설정
+GPSserialPort.BaudRate = "4800";      //통신속도 설정- 크게 차이는 없으나 제품에서 권장하는 값을로 셋팅
+ GPSserialPort.Parity = Parity.None;
+ GPSserialPort.DataBits = 8;
+ GPSserialPort.StopBits = StopBits.One;
+ GPSserialPort.ReadBufferSize = 600;
+if (!GPSserialPort.IsOpen)  //GPS 포트가 열려있지 않으면 오픈한다.
+ GPSserialPort.Open();
+isStartGPS = true;
+ //나같은 경우는 필요에 따라 GPS 수신을 쓰레드에서 처리하기로 했다.
+ ThreadGPS = new Thread(new ThreadStart(this.receiveGPSMsg));
+ ThreadGPS.IsBackground = true;
+ ThreadGPS.Start();
+}
+
+//GPS 수신 처리 
+// COM 포트가 연결된 상태에서는 계속에서 GPS 수신 문자열이 수신되므로
+//주기를 이용하여 약3초정도 마다 문자열을 끊어서 제일 마지막 GPGGA만을 가지고 메세지 처리를 하였다.
+ /// <summary>
+        /// GPS 메세지 읽기 -처리
+        /// </summary>
+        private void receiveGPSMsg()
+        {
+             try
+            {
+                while (isStartGPS)
+                {
+                    if (!GPSserialPort.IsOpen)
+                    {
+                        MessageBox.Show("GPS 연결이 끊겼습니다. GPS 접속환경 및 GPS연결정보를 살펴보시기 바랍니다.");
+                        return;
+                    }
+                    
+                    Thread.Sleep(3000);  //3초간 대기후 데이터 읽음
+                                                         
+                        string GPSData = "";
+                        try
+                        {
+                          GPSData=GPSserialPort.ReadExisting();  //시리얼 포트에서 GPS 데이터 읽기
+                        
+                            parsingMsg(GPSData ); //함수 호출..... 데이터 처리하기                               
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show(e.ToString());
+                            return;
+                        }
+                    
+                }
+            }
+            catch (ThreadInterruptedException)
+            {
+                return;
+            }
+        }
+
+
+public void parsingMsg(string Msg, bool isSave)
+        {
+        
+            string 위도= null;
+            string 경도 = null; 
+            string 수신시간= "";  
+            string GPS수신종류= "";   
+            string 위성갯수= ""; 
+            string 고도(해수면기준)= "";    
+            string[] ChkMsg = null;
+            string temp = "";
+            if (Msg == null || Msg.Equals(""))
+            {
+            }
+            else
+            {
+                try
+                {
+                    Msg.Replace("\n\r", "");
+                    int selectIDX = -1;
+                    string[] strArr = Msg.Split('$');
+                    for (int i = strArr.Length-1; i >= 0; i--)   //최근의 GPGGA 문자열 찾기
+                    {
+                        if (strArr[i].ToString().Substring(0, 5).Equals("GPGGA"))
+                        {
+                            ChkMsg = strArr[i].ToString().Split(',');
+                            if (ChkMsg[2] == null || ChkMsg[3] == null || ChkMsg[4] == null || ChkMsg[5] == null)
+                            {
+                                continue;
+                            }
+                            else if (ChkMsg[2].ToString().Replace(" ", "").Equals("") || ChkMsg[3].ToString().Replace(" ", "").Equals("") || ChkMsg[4].ToString().Replace(" ", "").Equals("") || ChkMsg[5].ToString().Replace(" ", "").Equals(""))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                selectIDX = i;
+                                break;
+                            }
+                            
+                        }
+                    }
+                    if (selectIDX < 0)  //수신 문자열중 GPGGA 없을때
+                    {
+                        위도= null;
+
+            경도 = null; 
+            수신시간= "";  
+            GPS수신종류= "";   
+            위성갯수= ""; 
+            고도(해수면기준)= "";  
+                    
+      }
+
+                    else
+                    {
+                         string[] ArrMsg = ChkMsg;
+                        temp = ArrMsg[1].ToString();
+                        int hour = Convert.ToInt16(temp.Substring(0, 2)) + 9;
+                        if (hour > 24)
+                        {
+                            hour = hour - 24;
+                        }
+                        수신시간= "" + hour + "시";
+                        수신시간+= " " + temp.Substring(2, 2) + "분 " + temp.Substring(4, 5) + "초";  //시간
+                        위도 = ArrMsg[2].ToString();
+                        경도 = ArrMsg[4].ToString();
+                        
+                        수신종류= ArrMsg[6].ToString();   
+                        /* 수신종류값별 GPS
+
+                    //1 = GPS fix (SPS) 
+                   //2 = DGPS fix
+                   //3 = PPS fix
+                   //4 = Real Time Kinematic
+                   //5 = Float RTK
+                   //6 = estimated (dead reckoning) (2.3 feature)
+                   //7 = Manual input mode
+                   //8 = Simulation mode
+    */
+
+
+                        위성갯수= ArrMsg[7].ToString();  
+                        고도(해수면기준) = ArrMsg[9].ToString();    
+                    }
+                                      
+                    
+                                                     
+                                       
+                }
+                catch(Exception e)
+                {
+                  
+                }
+            }
+        
+\
+
+</pre>
