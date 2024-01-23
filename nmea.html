@@ -2,16 +2,17 @@
 *NMEA(National Marine Electronics Association)
 - 해양 전자 장비 기자재들 간의 통신을 위한 데이터 프로토콜
 - GPS는 NMEA-0183 프로토콜 사용
-  $GPRMC,141114.999,A,3730.0264,N,12655.2351,E,15.51,202.12,101200,,*3C
+  
   ~ $: 문장의 시작
   ~ Device ID: 장치 구분, $ 바로 다음에 오는 문자 2개
   ~ Sentence ID: 문장 구분, Device ID 다음에 오는 문자 3개
   ~ ,: 각 필드 구분
   ~ *: checksum, $와 , 사이에 있는 각 문자를 XOR 연산한 값
 
+  $GPRMC,141114.999,A,3730.0264,N,12655.2351,E,15.51,202.12,101200,,*3C
   <table >
     <tr>
-        <td><p>&nbsp;Idx</p></td>
+        <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Idx</p></td>
         <td style="width: 144px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Field</p></td>
         <td style="width: 148px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Value</p></td>
         <td style="width: 638px; height: 24px; border-bottom: 1px solid rgb(204, 204, 204); border-right: 1px solid rgb(204, 204, 204); border-top: 1px solid rgb(204, 204, 204);"><p>&nbsp;Comments</p></td>
