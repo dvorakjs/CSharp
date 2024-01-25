@@ -9,138 +9,55 @@
 *NMEA(National Marine Electronics Association)
 - 해양 전자 장비 기자재들 간의 통신을 위한 데이터 프로토콜
 - GPS는 NMEA-0183 프로토콜 사용
+- $aaccc, c-c*hh<CR></LF>
   
   ~ $: 문장의 시작
-  ~ Device ID: 장치 구분, $ 바로 다음에 오는 문자 2개
-  ~ Sentence ID: 문장 구분, Device ID 다음에 오는 문자 3개
+  ~ aacc: 주소, "aa"는 talker ID, "ccc"는 문장 타입
   ~ ,: 각 필드 구분
-  ~ *: checksum, $와 , 사이에 있는 각 문자를 XOR 연산한 값
+  ~ c-c: 데이터 문장 블럭
+  ~ *: checksum 구분자
+  ~ hh: checksum, $와 * 사이에 있는 각 문자를 8bit XOR 연산한 값
+  ~ <CR></LF>: Carriage return, line feed
+ 
+- Talker ID
+  ~ GP: Global Positioning System receiver
+  ~ GN: Combination of multiple satellite systems (NMEA 1083)
+  ~ Pxxx: Proprietary, Vendor specific
 
-  $GPRMC,141114.999,A,3730.0264,N,12655.2351,E,15.51,202.12,101200,,*3C
-  <table>
-    <tr>
-        <td ><p>&nbsp;Idx</p></td>
-        <td ><p>&nbsp;Field</p></td>
-        <td ><p>&nbsp;Value</p></td>
-        <td ><p>&nbsp;Comments</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;1</p></td>
-        <td ><p>&nbsp;Sentence ID</p></td>
-        <td ><p>&nbsp;$GPGGA</p></td>
-        <td ><p>&nbsp;Global Positioning system fixed data</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;2</p></td>
-        <td ><p>&nbsp;UTC Time</p></td>
-        <td ><p>&nbsp;141113.999</p></td>
-        <td ><p>&nbsp;시각. hhmmss.sss 형태이다.&nbsp;</p>
-        <p>&nbsp;예제는 14시 11분 13.999초 라는 의미이다. 세계 표준시 이므로 한국에서 사용하려면&nbsp;+9 를 해야 한다.</p>
-        <p>&nbsp;참고로 날짜는 GPGGA로는 확인 할 수 없고,&nbsp;GPRMC에서 처리해야 한다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;3</p></td>
-        <td ><p>&nbsp;Latitude</p></td>
-        <td ><p>&nbsp;3730.0308</p></td>
-        <td ><p>&nbsp;위도. ddmm.mmmm 형식이다. 앞의 2자가 '도' 이고 이후는 '분' 이다.</p>
-        <p>&nbsp;*'도분초' 형식이 아닌 '도분' 인것을 유의할 것.&nbsp;</p>
-        <p>&nbsp;필요하다면&nbsp;소수점 아래는 60을 곱하여 '초' 형식으로 변환 해야 한다.</p>
-        <p>&nbsp;=&gt; 0.0308분 x 60 =&nbsp;1.848 초</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;4</p></td>
-        <td ><p>&nbsp;N/S Indicator</p></td>
-        <td ><p>&nbsp;N</p></td>
-        <td ><p>&nbsp;N = North, S = South</p>
-        <p>&nbsp;북위 인지 남위&nbsp;인지를 나타낸다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;5</p></td>
-        <td ><p>&nbsp;Longitude</p></td>
-        <td ><p>&nbsp;12655.2369</p></td>
-        <td ><p>&nbsp;경도. dddmm.mmmm 형식이다. &nbsp;앞의 3자가 '도' 이고 이후는 '분' 이다.&nbsp;</p>
-        <p>&nbsp;*'도분초' 형식이 아닌 '도분' 인것을 유의할 것.&nbsp;</p>
-        <p>&nbsp;필요하다면&nbsp;소수점 아래는 60을 곱하여 '초' 형식으로 변환 해야 한다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;6</p></td>
-        <td ><p>&nbsp;E/W Indicator</p></td>
-        <td ><p>&nbsp;E</p></td>
-        <td ><p>&nbsp;E = East, W = West,&nbsp;</p>
-        <p>&nbsp;동경인지&nbsp;서경인지를 나타낸다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;7</p></td>
-        <td ><p>&nbsp;Position Fix</p></td>
-        <td ><p>&nbsp;1</p></td>
-        <td ><p>&nbsp;0 = Invalid, 1 = Valid SPS, 2 = Valid DGPS, 3 = Valid PPS</p>
-        <p>&nbsp;위치가 결정 됐는지를 나타낸다. 이 값이 0이면 위도, 경도 등을 믿을 수 없으므로 사용하면 안된다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;8</p></td>
-        <td ><p>&nbsp;Satellites Used</p></td>
-        <td ><p>&nbsp;06</p></td>
-        <td ><p>&nbsp;Satellites being used (0-12)</p>
-        <p>&nbsp;현재 수신되는 위성의 개수이다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;9</p></td>
-        <td ><p>&nbsp;HDOP</p></td>
-        <td ><p>&nbsp;1.7</p></td>
-        <td ><p>&nbsp;Horizontal Dilution of Precision</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;10</p></td>
-        <td ><p>&nbsp;Altitude</p></td>
-        <td ><p>&nbsp;98.9</p></td>
-        <td ><p>&nbsp;WGS-84 타원체에서 &nbsp;평균해수면(MSL : Mean Sea Level)을 기준으로 한 고도.</p>
-        <p>&nbsp;고도값의 단위는 다음에 오는 Altitude Units&nbsp;필드가 결정한다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;11</p></td>
-        <td ><p>&nbsp;Altitude Units</p></td>
-        <td ><p>&nbsp;M</p></td>
-        <td ><p>&nbsp;M = Meters</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;12</p></td>
-        <td ><p>&nbsp;Geoid Seperation</p></td>
-        <td ><p>&nbsp;(empty)&nbsp;</p></td>
-        <td ><p>&nbsp;Geoid seperation in meters according to WGS-84 ellipsoid</p>
-        <p>&nbsp;MSL과 Geoid의 고도차. 마이너스 값이 나올 수 있다.</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;13</p></td>
-        <td ><p>&nbsp;Seperation Units</p></td>
-        <td ><p>&nbsp;(empty)</p></td>
-        <td ><p>&nbsp;M = Meters</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;14</p></td>
-        <td ><p>&nbsp;DGPS Age</p></td>
-        <td ><p>&nbsp;(empty)</p></td>
-        <td ><p>&nbsp;Age of DGPS data in seconds</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;15</p></td>
-        <td ><p>&nbsp;DPGS Station ID</p></td>
-        <td ><p>&nbsp;0</p></td>
-        <td ><p>&nbsp;</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;16</p></td>
-        <td ><p>&nbsp;Checksum</p></td>
-        <td ><p>&nbsp;*3E</p></td>
-        <td ><p>&nbsp;</p></td>
-    </tr>
-    <tr>
-        <td ><p>&nbsp;17</p></td>
-        <td ><p>&nbsp;Terminator</p></td>
-        <td ><p>&nbsp;CR/LF</p></td>
-        <td ><p>&nbsp;</p></td>
-    </tr>
-    </table>
+- 문장 타입
+  ~ GGA: Time, Position and fix related data for a GPS receiver
+  ~ GSA: GPS DOP(dilution of precision) and active Satellites
+  ~ GST: position error statistics
+  ~ GSV: # of satellites in view, satellite PRN(pesudo- random noise) number, elevation, azimuth, signal-to-noise ration
+  ~ RMC: position, velocity, Time
+  ~ VTG: actual track made good and speed over ground
+  ~ ZDA: UTC day, month, year, local time zone offset
 
+- $--GGA,hhmmss.ss(1),ddmm.mm(2),a(3),ddmm.mm(4),a(5),x(6),xx(7),x.x(8),x.x(9),M(10),x.x(11),M(12),x.x(13),xxxx(14)*hh(15)<CR><LF>  
+  (1) UTC(Universal Time Coordinated) of this position report, hh is hours, mm is minutes, ss.ss is seconds   
+  (2) Latitude, dd is degrees, mm.mm is minutes
+  (3) North or South
+  (4) Longitude, dd is degrees, mm.mm is minutes
+  (5) East or West
+  (6) GPS Quality Indicator(non null)
+      0-fix not availabe
+      1-GPS fix
+      2-Diffential GPS fix
+      3-PPS fix
+      4-Real Time Kinematic
+      5-Float RTK
+      6-Estimated(dead reckoning)
+      7-Manual Input Mode
+      8-Simulation Mode
+  (7) # of satellites in use, 00-12
+  (8) Horizontal dilution of precision(meters)
+  (9) Antenna Alititude above/below mean-sea-level(geoid)(meters)
+ (10) Units of antenna altitude(meters)
+ (11) Geoidal seperation
+ (12) Units of geoidal seperation(meters)
+ (13) Age of differential GPS data
+ (14) Differential reference station ID
+ (15) checksum
 
   using System.IO.Ports;
 
