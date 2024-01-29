@@ -59,6 +59,31 @@
  (14) Differential reference station ID
  (15) checksum
 
+ $ --GST,hhmmss.ss(1),x(2),x(3),x(4),x(5),x(6),x(7),x(8)*hh(9)<CR><LF>
+  (1) UTC of associated GGA fix   
+  (2) Total RMS standard deviation of ranges inputs to the navigation solution
+  (3) Standard deviation (meters) of semi-major axis of error ellipse
+  (4) Standard deviation (meters) of semi-minor axis of error ellipse
+  (5) Orientation of semi-major axis of error ellipse (true north degrees)
+  (6) Standard deviation (meters) of latitude error
+  (7) Standard deviation (meters) of longitude error
+  (8) Standard deviation (meters) of altitude error
+  (9) checksum  
+
+$--VTG,x.x(1),T(2),x.x(3),M(4),x.x(5),N(6),x.x(7),K(8),m(9)*hh(10)<CR><LF>(NMEA 2.3)
+  (1) Course over ground, degrees True 
+  (2) T = True
+  (3) Course over ground, degrees Magnetic
+  (4) M = Magnetic
+  (5) Speed over ground, knots
+  (6) N = Knots
+  (7) Speed over ground, km/hr
+  (8) K = Kilometers Per Hour
+  (9) FAA mode indicator (NMEA 2.3 and later)
+ (10) Checksum
+
+
+
   using System.IO.Ports;
 
 //GPS 실행 시작
