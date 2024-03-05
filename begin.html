@@ -22,7 +22,7 @@
   - Virtual execution system
 
 * Source code는 intermediate language(IL)로 컴파일됨
-  - *.dill 형태로 code와 resource가 어셈블리고 저장됨
+  - *.dill 형태로 code와 resource가 어셈블리로 저장됨
   - 실행 시 어셈블리는 CLR에 로딩되어 Just-In-Time(JIT) 컴파일
   - C#과 F#, Visual Basic, C++의 .NET 버젼과 호환 가능
     ~Common Type Specification(CTS) 준수
@@ -326,7 +326,32 @@ Console.WriteLine(builder.ToString());
 - 확장자가 sln
 * 프로젝트
 - 확장자가 csproj 
- 
+
+
+## 2024년 02월 19일 ##
+* Dictionary
+  - var 오브젝트명 = new Dictionary<key데이터 형, Value데이터형>
+    오브젝트명.Add();
+    foreach(KeyValuePair<Key데이터형, Value데이터형> item in 오브젝트명){
+      item.Key, item.Value  
+    }
+    foreach(Key데이터형 Key in 오브젝트명.Keys){
+      Key  
+    }
+
+* List
+  - List<T> list = new List<T>();
+    list.Add()
+    list.Count
+    list.Clear()
+
+* Queue
+  - Queue<T> queue = new Queue<T>();
+    queue.Enqueue();
+    queue.Dequeue();
+    queue.Count
+
+
 
 
 </pre>
